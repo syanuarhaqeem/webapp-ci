@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: webapp-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+  - name: webapp.rules
+    rules:
+    - alert: WebappDown
+      expr: kube_deployment_status_replicas_available{namespace="default",deployment=~"webapp"} < 2
+      for: 30s
+      labels:
+        severity: critical
+      annotations:
+        summary: "Webapp is down"
+        description: "One of the webapp deployments has less than 2 pods available"
+    - alert: PostgresDown
+      expr: kube_deployment_status_replicas_available{namespace="default",deployment="webapp-db"} < 1
+      for: 30s
+      labels:
+        severity: critical
+      annotations:
+        summary: "Postgres database is down"
+        description: "The Postgres deployment has no available pods"

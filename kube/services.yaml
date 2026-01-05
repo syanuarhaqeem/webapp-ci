@@ -1,0 +1,27 @@
+# postgres
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-db-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+# Webapp Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp
+  ports:
+    - port: 80
+      targetPort: 3000
