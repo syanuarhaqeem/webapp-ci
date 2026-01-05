@@ -9,6 +9,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 COPY app.py .
 COPY healthcheck.py .
+COPY database.py .
 
 EXPOSE 3000
 
