@@ -30,7 +30,7 @@ def index():
         cur.close()
         conn.close()
 
-        return f"Access logged at {now}", 200
+        return f"Access logged at {now}. Hello!", 200
 
     except Exception as e:
         return f"Error: {e}", 500
